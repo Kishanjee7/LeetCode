@@ -20,10 +20,42 @@ Output: false
 Code
 class Solution {
     public boolean search(int[] nums, int target) {
-       for(int i=0; i<nums.length; i++){
-        if(nums[i]==target)
-        return true;
-       } 
-       return false;
+       
+      int start=0;
+      int end= nums.length-1;
+      boolean ans=false;
+
+      while(start<=end){
+        int mid= start+(end-start)/2;
+        if(target==nums[mid]){
+            return true;
+        }
+// if start, mid, and end all are same then we can't say which part is sorted . So, trim down the space.
+        if(nums[start]== nums[mid] && nums[mid]== nums[end]){
+            start++;
+            end--;
+        }
+
+//if left side is sorted 
+         else if(nums[start]<=nums[mid]){
+        // check ans be found in this side
+            if(target>=nums[start] && target<nums[mid]){
+                end=mid-1;
+            }else{
+                start=mid+1;
+            }
+        }// if right side is sorted
+        else{
+        // check ans be found in this side
+            if(target>nums[mid] && target<=nums[end]){
+                start=mid+1;
+            }else{
+                end=mid-1;
+            }
+        }
+
+      }
+      return ans;
     }
+    
 }
