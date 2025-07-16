@@ -30,13 +30,21 @@ Explanation: The original array was [11,13,15,17] and it was rotated 4 times.
 Code
 class Solution {
     public int findMin(int[] nums) {
-        int min=nums[0];
-        for(int i=1; i<nums.length; i++){
-            if(min >nums[i]){
-                min=nums[i];
+        int n= nums.length;
+        int start=0;
+        int end= n-1;
+        int minElement= Integer.MAX_VALUE;
+        while(start<=end){
+            int mid= start+(end-start)/2;
+            if(nums[start]<=nums[mid]){
+                minElement = Math.min(minElement, nums[start]);
+                start=mid+1;
+            }else{
+                minElement = Math.min(minElement, nums[mid]);
+                end= mid-1;
             }
-
         }
-        return min;
+        return  minElement;
     }
 }
+
