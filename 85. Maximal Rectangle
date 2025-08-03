@@ -24,25 +24,27 @@ Output: 1
 Code
 class Solution {
     public int maximalRectangle(char[][] matrix) {
-        // if there are no rows then return 
-        if(matrix.length == 0){
+        
+        // if there are no rows then return
+        if(matrix.length==0){
             return 0;
         }
-        // find noumbers of columns in a row
-        int heights[]= new int[matrix[0].length];
-        int largest=0;
-        for(int i=0; i<matrix.length ; i++){
-            for(int j=0; j<matrix[i].length; j++){
-                int val=matrix[i][j]-'0'; // char to int conversion
-                if(matrix[i][j]==0){
-                    heights[j]=0;
-                }else{
-                    heights[j]+=val;
+        // find the number of columns in a row.
+        int heights[] = new int[matrix[0].length];
+        int largest = 0; 
+        //O(N^2)
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[i].length;j++){
+                int val = matrix[i][j]-'0'; // char to int
+                if(val == 0){
+                    heights[j] = 0;
+                } else {
+                    heights[j]+= val;
                 }
             }
-            int maxArea=largestRectangleArea(heights);
-            if(largest < maxArea){
-                largest= maxArea;
+            int maxArea = largestRectangleArea(heights); //O(3N) ~ O(N)
+            if(largest<maxArea){
+                largest = maxArea;
             }
         }
         return largest;
