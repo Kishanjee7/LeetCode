@@ -1,0 +1,74 @@
+Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return the empty string "".
+
+The testcases will be generated such that the answer is unique.
+
+ 
+
+Example 1:
+Input: s = "ADOBECODEBANC", t = "ABC"
+Output: "BANC"
+Explanation: The minimum window substring "BANC" includes 'A', 'B', and 'C' from string t.
+
+Example 2:
+Input: s = "a", t = "a"
+Output: "a"
+Explanation: The entire string s is the minimum window.
+
+Example 3:
+Input: s = "a", t = "aa"
+Output: ""
+Explanation: Both 'a's from t must be included in the window.
+Since the largest window of s only has one 'a', return empty string.
+
+
+
+
+
+Code
+class Solution {
+    public String minWindow(String s, String t) {
+        HashMap<Character, Integer> freqMap= new HashMap<>();
+        for(int i=0; i<t.length(); i++){
+            char ch= t.charAt(i);
+            freqMap.put(ch, freqMap.getOrDefault(ch,0)+1);
+        }
+        int ucc= freqMap.size();
+        int startIndex=-1;
+        int windowStart= 0;
+        int windowEnd=0;
+        int minLen= Integer.MAX_VALUE;
+        int N= s.length();
+        while(windowEnd<N){
+            // Expansion Phase
+            char ch= s.charAt(windowEnd);
+            if(freqMap.containsKey(ch)){
+                freqMap.put(ch, freqMap.get(ch)-1);
+                if(freqMap.get(ch)==0){
+                    ucc--;
+                }
+            }
+            //Shrinking Phase
+            while(ucc==0){
+                int len= windowEnd- windowStart+1;
+                if(len<minLen){
+                    minLen=len;
+                    startIndex= windowStart;
+                }
+                ch= s.charAt(windowStart);
+                if(freqMap.containsKey(ch)){
+                    freqMap.put(ch, freqMap.get(ch)+1);
+                    if(freqMap.get(ch)>0){
+                        ucc++;
+                    }
+                }
+                windowStart++;
+            }
+            windowEnd++;
+        }
+        if(startIndex==-1){
+            return "";
+        }
+        return s.substring(startIndex, startIndex+minLen);
+    }
+}
+ 
