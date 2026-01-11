@@ -22,22 +22,28 @@ Output: [0,0,9,0,0]
 Code
 class Solution {
     public int[] productExceptSelf(int[] nums) {
-        int l= nums.length;
-        int[] right= new int[l];
-        int pro=1;
-        for(int i=l-1;i>=0;i--){
-            pro= pro*nums[i];
-            right[i]=pro;
+        int mul=1;
+        int zerocount=0;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]==0){
+                zerocount++;
+            }else{
+                mul= mul*nums[i];
+            }
         }
-
-        int[] ans= new int[l];
-        int left=1;
-        for(int i=0;i<l-1;i++){
-            int val= left*right[i+1];
-            ans[i]=val;
-            left=left*nums[i];
+        for(int i=0; i<nums.length; i++){
+            if(zerocount>1){
+                nums[i]=0;
+            }else if(zerocount==1){
+                if(nums[i]==0){
+                    nums[i]=mul;
+                }else{
+                    nums[i]=0;
+                }
+            }else{
+                nums[i]=mul/nums[i];
+            }
         }
-        ans[l-1]=left;
-        return ans;
+        return nums;
     }
 }
