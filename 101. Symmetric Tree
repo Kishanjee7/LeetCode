@@ -38,11 +38,17 @@ class Solution {
         if (n1 == null && n2 == null) {
             return true;
         }
-        
         if (n1 == null || n2 == null) {
             return false;
         }
-        
-        return n1.val == n2.val && isMirror(n1.left, n2.right) && isMirror(n1.right, n2.left);
+        if(n1.val != n2.val){
+            return false;
+        }
+        boolean r1= isMirror(n1.left, n2.right);
+        boolean r2= isMirror(n1.right, n2.left);
+        if(r1==true && r2==true){
+            return true;
+        }
+        return false;
     }
 }
