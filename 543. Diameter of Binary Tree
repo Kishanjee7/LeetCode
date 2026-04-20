@@ -36,18 +36,23 @@ Code
  * }
  */
 class Solution {
-    public int diameterOfBinaryTree(TreeNode root) {
-        int maxi[]= new int[1]; //pass by reference
-        findHeight(root, maxi);
-        return maxi[0];
-    }
-    public int findHeight(TreeNode root, int maxi[]){
+    int max=0;
+    private int getDiameter(TreeNode root) {
         if(root==null){
             return 0;
         }
-        int leftHeight= findHeight(root.left, maxi);
-        int rightHeight= findHeight(root.right, maxi);
-        maxi[0]= Math.max(maxi[0], leftHeight+rightHeight);
-        return (1 + Math.max(leftHeight, rightHeight));
+        int l= getDiameter(root.left);
+        int r= getDiameter(root.right);
+
+        max=Math.max(max, l+r);
+
+        return 1+Math.max(l,r);
+    }
+    public int diameterOfBinaryTree(TreeNode root) {
+        getDiameter(root);
+        return max;
+          
     }
 }
+
+
